@@ -22,7 +22,6 @@ void SetupExports() {
 void SetupHooks() {
 	oLowerBodyYawTargetProxy = Netvars->HookProp("DT_BasePlayer", "m_flLowerBodyYawTarget", Hooks::LowerBodyYawTargetProxy);
 
-	oWndProc = (WNDPROC)SetWindowLongPtr(G::Window, GWL_WNDPROC, (LONG_PTR)Hooks::WndProc);
 	VPanel = std::make_unique<CHook>(Interfaces->VPanel);
 	Client = std::make_unique<CHook>(Interfaces->Client);
 	ClientMode = std::make_unique<CHook>(Interfaces->ClientMode);
@@ -34,6 +33,7 @@ void SetupHooks() {
 	EngineTrace = std::make_unique<CHook>(Interfaces->EngineTrace);
 	Prediction = std::make_unique<CHook>(Interfaces->Prediction);
 
+	oWndProc = (WNDPROC)SetWindowLongPtr(G::Window, GWL_WNDPROC, (LONG_PTR)Hooks::WndProc);
 	oPaintTraverse = VPanel->HookMethod<PaintTraverseFn>(Hooks::PaintTraverse, 41);
 	oCreateMove = ClientMode->HookMethod<CreateMoveFn>(Hooks::CreateMove, 24);
 	oOverrideView = ClientMode->HookMethod<OverrideViewFn>(Hooks::OverrideView, 18);
